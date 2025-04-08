@@ -1,13 +1,197 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  background-color: black;
+  color: white;
+  font-family: 'Helvetica Neue', 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* Splash Screen */
+@keyframes pop {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.splash {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: black;
+  height: 100vh;
+}
+
+.logo {
+  width: 300px;
+  animation: pop 1s ease-in-out;
+}
+
+/* Login Screen */
+.login-screen {
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-form {
+  background: #111;
+  padding: 30px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+}
+
+.login-form input,
+.login-form button {
+  margin: 10px 0;
+  padding: 12px;
+  background: #222;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.login-form button {
+  background: red;
+  cursor: pointer;
+}
+
+.login-info {
+  font-size: 14px;
+  color: #aaa;
+  margin-bottom: 10px;
+}
+
+/* Category Layout */
+.category {
+  margin-bottom: 40px;
+}
+
+.category-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding-left: 20px;
+  margin-top: 30px;
+}
+
+/* Carousel (Hero Row) */
+.carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 20px;
+  padding: 20px;
+  scroll-snap-type: x mandatory;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  transition: transform 0.3s ease;
+}
+
+.carousel-item img {
+  height: 250px;
+  width: 400px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.carousel-item:hover {
+  transform: scale(1.1);
+  z-index: 10;
+}
+
+/* Movie Rows (All Categories) */
+.movie-row {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 16px;
+  padding: 10px 20px;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+}
+
+.movie-row::-webkit-scrollbar {
+  display: none;
+}
+
+.movie-card {
+  flex: 0 0 auto;
+  width: 160px;
+  height: 240px;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  scroll-snap-align: start;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #111; /* fallback background */
+}
+
+.movie-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* This ensures consistent cropping and sizing */
+  display: block;
+}
+
+.movie-card:hover {
+  transform: scale(1.1);
+  z-index: 10;
+}
+
+/* Movie Detail Page */
+.movie-detail {
+  padding: 20px;
+}
+
+.detail-poster {
+  width: 300px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+}
+
+.movie-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.movie-buttons button {
+  padding: 10px 20px;
+  background: red;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.back-button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  margin-bottom: 20px;
+  cursor: pointer;
 }

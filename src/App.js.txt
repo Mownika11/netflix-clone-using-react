@@ -85,178 +85,181 @@ const topMovies = [
 ];
 
 function App() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [showSplash, setShowSplash] = useState(true);
-    const [selectedMovie, setSelectedMovie] = useState(null);
-    const [selectedCategory, setSelectedCategory] = useState(null);
-  
-    useEffect(() => {
-      const timer = setTimeout(() => setShowSplash(false), 3000);
-      return () => clearTimeout(timer);
-    }, []);
-  
-    const handleLogin = (e) => {
-      e.preventDefault();
-      const email = e.target.email.value;
-      const password = e.target.password.value;
-      if (email === 'mownika@netflix.com' && password === 'netflix123') {
-        setIsLoggedIn(true);
-      } else {
-        alert('Invalid credentials');
-      }
-    };
-  
-    if (showSplash) {
-      return (
-        <div className="splash">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png"
-            alt="Netflix Logo"
-            className="logo"
-          />
-        </div>
-      );
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowSplash(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    if (email === 'mownika@netflix.com' && password === 'netflix123') {
+      setIsLoggedIn(true);
+    } else {
+      alert('Invalid credentials');
     }
-  
-    if (!isLoggedIn) {
-      return (
-        <div
+  };
+
+  if (showSplash) {
+    return (
+      <div className="splash">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png"
+          alt="Netflix Logo"
+          className="logo"
+        />
+      </div>
+    );
+  }
+
+  if (!isLoggedIn) {
+    return (
+      <div
+        style={{
+          backgroundColor: 'black',
+          height: '100vh',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <form
+          onSubmit={handleLogin}
           style={{
-            backgroundColor: 'black',
-            height: '100vh',
+            backgroundColor: '#111',
+            padding: '30px',
+            borderRadius: '10px',
             display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
+            flexDirection: 'column',
+            gap: '15px',
+            width: '300px',
+            boxShadow: '0 0 20px rgba(255, 0, 0, 0.5)',
           }}
         >
-          <form
-            onSubmit={handleLogin}
+          <h2 style={{ color: 'white', textAlign: 'center' }}>Sign In</h2>
+  
+          <div
             style={{
-              backgroundColor: '#111',
-              padding: '30px',
-              borderRadius: '10px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '15px',
-              width: '300px',
-              boxShadow: '0 0 20px rgba(255, 0, 0, 0.5)',
+              backgroundColor: '#222',
+              padding: '10px',
+              borderRadius: '5px',
+              color: 'white',
+              fontSize: '14px',
+              textAlign: 'center',
             }}
           >
-            <h2 style={{ color: 'white', textAlign: 'center' }}>Sign In</h2>
-            <div
-              style={{
-                backgroundColor: '#222',
-                padding: '10px',
-                borderRadius: '5px',
-                color: 'white',
-                fontSize: '14px',
-                textAlign: 'center',
-              }}
-            >
-              Mail ID: <strong>mownika@netflix.com</strong> <br />
-              Password: <strong>netflix123</strong>
-            </div>
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              defaultValue="mownika@netflix.com"
-              required
-              style={{
-                padding: '10px',
-                borderRadius: '5px',
-                border: 'none',
-                backgroundColor: '#333',
-                color: 'white',
-              }}
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              defaultValue="netflix123"
-              required
-              style={{
-                padding: '10px',
-                borderRadius: '5px',
-                border: 'none',
-                backgroundColor: '#333',
-                color: 'white',
-              }}
-            />
-            <button
-              type="submit"
-              style={{
-                padding: '10px',
-                backgroundColor: 'red',
-                border: 'none',
-                borderRadius: '5px',
-                color: 'white',
-                fontWeight: 'bold',
-                cursor: 'pointer',
-              }}
-            >
-              Login
-            </button>
-          </form>
-        </div>
-      );
-    }
-  
-    if (selectedMovie) {
-      const similarMovies = categories[selectedCategory].filter(p => p !== selectedMovie).slice(0, 6);
-      return (
-        <div className="movie-detail">
-          <button className="back-button" onClick={() => setSelectedMovie(null)}>← Back</button>
-          <img src={selectedMovie} alt="Selected Movie" className="detail-poster" />
-          <div className="detail-buttons">
-            <button>Watch</button>
-            <button>Add to Wishlist</button>
+            Mail ID: <strong>mownika@netflix.com</strong> <br />
+            Password: <strong>netflix123</strong>
           </div>
-          <h3>Movies Like This</h3>
-          <div className="similar-movies">
-            {similarMovies.map((poster, i) => (
-              <img key={i} src={poster} alt={`Similar ${i}`} className="similar-poster" />
-            ))}
-          </div>
-        </div>
-      );
-    }
   
-    return (
-      <div className="app">
-        <div className="carousel">
-          {topMovies.map((poster, index) => (
-            <div key={index} className="carousel-item">
-              <img src={poster} alt={`Top ${index}`} className="carousel-poster" />
-            </div>
-          ))}
-        </div>
-  
-        {Object.entries(categories).map(([category, posters], idx) => (
-          <div key={idx} className="category">
-            <h2>{category}</h2>
-            <div className="poster-row">
-              {posters.map((poster, i) => (
-                <div
-                  key={i}
-                  className="movie-card"
-                  onClick={() => {
-                    setSelectedMovie(poster);
-                    setSelectedCategory(category);
-                  }}
-                >
-                  <img
-                    src={poster}
-                    alt={`${category} ${i}`}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            defaultValue="mownika@netflix.com"
+            required
+            style={{
+              padding: '10px',
+              borderRadius: '5px',
+              border: 'none',
+              backgroundColor: '#333',
+              color: 'white',
+            }}
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            defaultValue="netflix123"
+            required
+            style={{
+              padding: '10px',
+              borderRadius: '5px',
+              border: 'none',
+              backgroundColor: '#333',
+              color: 'white',
+            }}
+          />
+          <button
+            type="submit"
+            style={{
+              padding: '10px',
+              backgroundColor: 'red',
+              border: 'none',
+              borderRadius: '5px',
+              color: 'white',
+              fontWeight: 'bold',
+              cursor: 'pointer',
+            }}
+          >
+            Login
+          </button>
+        </form>
       </div>
     );
   }
   
-  export default App;
+  
+  
+  if (selectedMovie) {
+    const similarMovies = categories[selectedCategory].filter(p => p !== selectedMovie).slice(0, 6);
+    return (
+      <div className="movie-detail">
+        <button className="back-button" onClick={() => setSelectedMovie(null)}>← Back</button>
+        <img src={selectedMovie} alt="Selected Movie" className="detail-poster" />
+        <div className="detail-buttons">
+          <button>Watch</button>
+          <button>Add to Wishlist</button>
+        </div>
+        <h3>Movies Like This</h3>
+        <div className="similar-movies">
+          {similarMovies.map((poster, i) => (
+            <img key={i} src={poster} alt={`Similar ${i}`} className="similar-poster" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="app">
+      <div className="carousel">
+        {topMovies.map((poster, index) => (
+          <div key={index} className="carousel-item">
+            <img src={poster} alt={`Top ${index}`} className="carousel-poster" />
+          </div>
+        ))}
+      </div>
+
+      {Object.entries(categories).map(([category, posters], idx) => (
+        <div key={idx} className="category">
+          <h2>{category}</h2>
+          <div className="poster-row">
+            {posters.map((poster, i) => (
+              <img
+                key={i}
+                src={poster}
+                alt={`${category} ${i}`}
+                className="poster"
+                onClick={() => {
+                  setSelectedMovie(poster);
+                  setSelectedCategory(category);
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default App;
+
+
